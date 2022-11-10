@@ -816,10 +816,6 @@ int anim_fb_init(void)
     phical_screen.needAllign = 1;
     phical_screen.need180Adjust = 1;
     phical_screen.fb_size = fb_size;
-    if (MTK_LOG_ENABLE == 1)
-    {
-        SLOGD("[libshowlogo: %s %d]MTK_LCM_PHYSICAL_ROTATION = %s\n", __FUNCTION__, __LINE__, MTK_LCM_PHYSICAL_ROTATION);
-    }
 
     int rotation = getRotation();
     if (MTK_LOG_ENABLE == 1)
@@ -1454,10 +1450,6 @@ int anim_drm_init(void)
     phical_screen.needAllign = 1;
     phical_screen.need180Adjust = 1;
     phical_screen.fb_size = fb_size;
-    if (MTK_LOG_ENABLE == 1)
-    {
-        SLOGD("[libshowlogo: %s %d]MTK_LCM_PHYSICAL_ROTATION = %s , red_offset = %d , blue_offset =  %d\n align_width = %d", __FUNCTION__, __LINE__, MTK_LCM_PHYSICAL_ROTATION, phical_screen.red_offset, phical_screen.blue_offset, phical_screen.allignWidth);
-    }
 
     int rotation = getRotation();
     if (MTK_LOG_ENABLE == 1)

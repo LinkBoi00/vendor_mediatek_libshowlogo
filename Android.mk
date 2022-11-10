@@ -13,8 +13,6 @@ LOCAL_SRC_FILES  := drm_c/drm_connector.c \
 					charging_animation.cpp \
 					utils.cpp
 
-LOCAL_CFLAGS += -DMTK_LCM_PHYSICAL_ROTATION=\"$(MTK_LCM_PHYSICAL_ROTATION)\"
-
 LOCAL_SHARED_LIBRARIES := libcutils libutils libc libstdc++ libz libdl libdrm liblog libgui libui libbase libSurfaceFlingerProp 
 
 LOCAL_STATIC_LIBRARIES += libfs_mgr
