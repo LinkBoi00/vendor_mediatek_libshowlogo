@@ -15,11 +15,8 @@ LOCAL_SRC_FILES  := drm_c/drm_connector.c \
 
 LOCAL_SHARED_LIBRARIES := libcutils libutils libc libstdc++ libz libdl libdrm liblog libgui libui libbase libSurfaceFlingerProp 
 
-LOCAL_STATIC_LIBRARIES += libfs_mgr
-
 LOCAL_C_INCLUDES += $(TOP)/external/zlib/
 LOCAL_C_INCLUDES += $(TOP)/frameworks/native/libs/nativewindow/include
-LOCAL_C_INCLUDES += system/core/fs_mgr/include
 
 LOCAL_HEADER_LIBRARIES += libdrm_headers
                     

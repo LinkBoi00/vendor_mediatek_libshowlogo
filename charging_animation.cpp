@@ -84,8 +84,6 @@
 #include <gui/SurfaceComposerClient.h>
 #include <gui/ISurfaceComposer.h>
 
-#include <fs_mgr.h>
-
 #include <chrono>
 
 /*  include drm_resources */
@@ -117,9 +115,6 @@
 #endif
 
 using namespace android;
-using android::fs_mgr::Fstab;
-using android::fs_mgr::GetEntryForMountPoint;
-using android::fs_mgr::ReadDefaultFstab;
 using namespace std::chrono;
 
 #if 0
@@ -199,10 +194,6 @@ static int error_flag = 0;
 
 // get system properties
 int getValue(char *key, char *defValue);
-
-//get the right partition path of logo
-#define LOGO_MNT_POINT "/logo"
-struct fstab *fstab;
 
 #if 0
 #if defined(MSSI_MTK_CARRIEREXPRESS_PACK)
@@ -409,14 +400,6 @@ if( to_include_fast_charging == 1) {
 #endif
 
 #endif
-/*
- * free fstab
- *
- */
-void free_fstab(void)
-{
-}
-
 /*
  * Set charging animation version
  *
@@ -644,37 +627,13 @@ void anim_logo_init(void)
     // read and de-compress logo data here
     int fd = 0;
     int len = 0;
-    Fstab fstab;
 
-    if (!ReadDefaultFstab(&fstab))
-    {
-        if (MTK_LOG_ENABLE == 1)
-        {
-            SLOGE("failed to open fstab\n");
-        }
-        error_flag = 1;
-        return;
-    }
-
-    auto rec = GetEntryForMountPoint(&fstab, LOGO_MNT_POINT);
-    if (rec == nullptr)
-    {
-        if (MTK_LOG_ENABLE == 1)
-        {
-            SLOGE("failed to get entry for %s\n", LOGO_MNT_POINT);
-        }
-        error_flag = 1;
-        return;
-    }
-
-    // "rec->blk_device" is the path
-    fd = open(rec->blk_device.c_str(), O_RDONLY);
-    // get logo patition from fstab end
+    fd = open("system/etc/logo", O_RDONLY);
     if (fd < 0)
     {
         if (MTK_LOG_ENABLE == 1)
         {
-            SLOGE("[libshowlogo: %s %d]open logo partition device file fail, errno = %d \n", __FUNCTION__, __LINE__, errno);
+            SLOGE("[libshowlogo: %s %d]open logo system file fail, errno = %d \n", __FUNCTION__, __LINE__, errno);
         }
         goto error_return;
     }
@@ -740,8 +699,6 @@ error_return:
     {
         close(fd);
     }
-    free_fstab();
-    sleep(3);
     error_flag = 1;
     if (MTK_LOG_ENABLE == 1)
     {
@@ -760,7 +717,6 @@ void anim_logo_deinit(void)
     {
         SLOGD("[libshowlogo: %s %d]\n", __FUNCTION__, __LINE__);
     }
-    free_fstab();
     free(logo_addr);
     logo_addr = NULL;
     free(dec_logo_addr);
