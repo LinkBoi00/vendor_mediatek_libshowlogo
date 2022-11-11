@@ -628,7 +628,7 @@ void anim_logo_init(void)
     int fd = 0;
     int len = 0;
 
-    fd = open("system/etc/logo", O_RDONLY);
+    fd = open("system/etc/charger/logo", O_RDONLY);
     if (fd < 0)
     {
         if (MTK_LOG_ENABLE == 1)
